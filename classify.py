@@ -80,16 +80,16 @@ if __name__ == '__main__':
                 ('Naive Bayes', naive_bayes.MultinomialNB()),
                 ('Logistic Regression', linear_model.LogisticRegression()),
                 ('Linear SVM', svm.LinearSVC()),
-                ('RBF SVM', svm.SVC()),
                 ('Random Forest', ensemble.RandomForestClassifier()),
                 ('Gradient Boosting', ensemble.GradientBoostingClassifier(n_estimators=80,learning_rate=0.1, min_samples_split=400,min_samples_leaf=50,max_depth=7,max_features='sqrt',subsample=0.8,random_state=10)),
-                ('Extreme Gradient Boosting', xgboost.XGBClassifier())
+                ('Extreme Gradient Boosting', xgboost.XGBClassifier()),
+                ('RBF SVM', svm.SVC()),
             ]
             
             # output out_filename
             fout = open('results.txt', 'w')
             
-            fout.write('Classifier,Acc,F1,P,R\n')
+            fout.write('Classifier&Acc&F1&P&R\\\\\\hline\n')
             for clf_name, clf in classifiers:
                 
                 if clf_name == 'Gradient Boosting':
@@ -101,15 +101,15 @@ if __name__ == '__main__':
                     feat_imp.plot(kind='bar', title='Feature Importances')
                     plt.ylabel('Feature Importance Score')
                     plt.tight_layout()
-                    plt.savefig('fig.png')
+                    plt.savefig('feature_importance.png')
                     
                 accuracy_scores, f1_scores, p_scores, r_scores = train_model(clf, X, y, cv=5)    
-                fout.write('%s,%0.4f (+/- %0.4f),%0.4f (+/- %0.4f),%0.4f (+/- %0.4f),%0.4f (+/- %0.4f)\n' % 
+                fout.write('%s & %0.2f $\pm$ %0.2f & %0.2f $\pm$ %0.2f & %0.2f $\pm$ %0.2f & %0.2f $\pm$ %0.2f \\\\\\hline\n' % 
                            (clf_name, 
-                            accuracy_scores.mean(), accuracy_scores.std() * 4,
-                            f1_scores.mean(), f1_scores.std() * 4,
-                            p_scores.mean(), p_scores.std() * 4,
-                            r_scores.mean(), r_scores.std() * 4))
+                            100 * accuracy_scores.mean(), 100 * accuracy_scores.std() * 2,
+                            100 * f1_scores.mean(), 100 * f1_scores.std() * 2,
+                            100 * p_scores.mean(), 100 * p_scores.std() * 2,
+                            100 * r_scores.mean(), 100 * r_scores.std() * 2))
                 fout.flush()
 
             fout.close()
