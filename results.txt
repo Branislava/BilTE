@@ -1,8 +1,0 @@
-\textbf{Classifier}&\textbf{Acc}&\textbf{F1}&\textbf{P}&\textbf{R}\\\hline
-\textbf{Naive Bayes} & 69.39 $\pm$ 5.19 & 72.35 $\pm$ 7.17 & 71.73 $\pm$ 2.95 & 73.33 $\pm$ 14.00 \\\hline
-\textbf{Logistic Regression} & 76.54 $\pm$ 4.03 & 79.92 $\pm$ 3.77 & 75.52 $\pm$ 2.93 & 84.89 $\pm$ 6.03 \\\hline
-\textbf{Linear SVM} & 63.67 $\pm$ 17.46 & 32.95 $\pm$ 51.64 & 71.96 $\pm$ 15.72 & 82.70 $\pm$ 44.82 \\\hline
-\textbf{Random Forest} & 73.37 $\pm$ 5.00 & 75.69 $\pm$ 3.17 & 76.69 $\pm$ 3.78 & 74.04 $\pm$ 6.51 \\\hline
-%\textbf{Gradient Boosting} & 76.69 $\pm$ 3.85 & 79.84 $\pm$ 3.44 & 76.19 $\pm$ 3.36 & 83.90 $\pm$ 5.16 \\\hline
-\textbf{Extreme} \\ \textbf{Gradient Boosting} & 76.95 $\pm$ 2.86 & 80.22 $\pm$ 2.81 & 76.01 $\pm$ 2.75 & 85.00 $\pm$ 5.83 \\\hline
-\textbf{RBF SVM} & 77.51 $\pm$ 2.16 & 80.82 $\pm$ 1.91 & 76.21 $\pm$ 2.84 & 86.10 $\pm$ 4.53 \\\hline

@@ -13,7 +13,7 @@ class MWE:
             
             # ['već']
             if len(pera) == 1:
-                self.tagged_tokens.append((pera[0], 'INT'))
+                self.tagged_tokens.append((pera[0], 'N')) # try as default POS tag (not true in this case)
             # ['', 'A', 'potencijalan']
             else:
                 for i in range(1, len(pera) - 1, 2):
@@ -27,56 +27,55 @@ class MWE:
         
         self.stoplist = None
     
-    def number_of_characters(self):
+    def number_of_chars(self):
         return self.nr_of_chars
     
-    def number_of_different_characters(self):
+    def number_of_different_chars(self):
         return len(set(self.mwe.lower()))
 
     def number_of_tokens(self):
         return self.nr_of_tokens
     
     def avg_token_length(self):
-        return 1.0 * sum([len(token) for token, _ in self.tagged_tokens]) / self.nr_of_tokens
+        return sum([len(token) for token, _ in self.tagged_tokens]) / self.nr_of_tokens
     
-    # WARNING: ako lose radi, probaj sa sirim skupom tagova
     def perc_of_nouns(self):
         tags = ['NOUN', 'N']
-        return 1.0 * sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
+        return sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
     
     def perc_of_verbs(self):
         tags = ['VERB', 'V']
-        return 1.0 * sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
+        return sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
     
     def perc_of_adjectives(self):
         tags = ['ADJ', 'A']
-        return 1.0 * sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
+        return sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
     
     def perc_of_numerals(self):
         tags = ['NUM']
-        return 1.0 * sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
+        return sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
     
     def perc_of_pronouns(self):
         tags = ['PRO', 'PRON']
-        return 1.0 * sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
+        return sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
     
     def perc_of_conjuctions(self):
         tags = ['CONJ', 'INT']
-        return 1.0 * sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
+        return sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
     
     def perc_of_adverbs(self):
         tags = ['ADV']
-        return 1.0 * sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
+        return sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
     
     def perc_of_prepositions(self):
         tags = ['PREP', 'ADP', 'PRT']
-        return 1.0 * sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
+        return sum(1 for _, tag in self.tagged_tokens if tag in tags) / self.nr_of_tokens
     
     def perc_of_stopwords(self):
-        return 1.0 * sum(1 for token, _ in self.tagged_tokens if token in self.stoplist) / self.nr_of_tokens
+        return sum(1 for token, _ in self.tagged_tokens if token in self.stoplist) / self.nr_of_tokens
     
     def perc_vocab_richness(self):
-        return 1.0 * len(set(self.tagged_tokens)) / self.nr_of_tokens
+        return len(set(self.tagged_tokens)) / self.nr_of_tokens
 
     def tag_0(self):
         return self.tagged_tokens[0][1]
@@ -112,34 +111,34 @@ class MWE:
         return tag
 
     def perc_of_consonants(self):
-        return 1.0 * sum(1 for letter in self.mwe if letter.isalpha() and letter.lower() not in 'aeiou') / self.nr_of_chars
+        return sum(1 for letter in self.mwe if letter.isalpha() and letter.lower() not in 'aeiou') / self.nr_of_chars
 
     def perc_of_vocals(self):
-        return 1.0 * sum(1 for letter in self.mwe if letter.lower() in 'aeiou') / self.nr_of_chars
+        return sum(1 for letter in self.mwe if letter.lower() in 'aeiou') / self.nr_of_chars
 
     def perc_lexical_diversity(self):
-        return 1.0 * self.number_of_different_characters() / self.nr_of_chars
+        return self.number_of_different_chars() / self.nr_of_chars
     
     def perc_of_diacritics(self):
-        return 1.0 * sum(1 for letter in self.mwe if letter.lower() in 'ščćđž') / self.nr_of_chars
+        return sum(1 for letter in self.mwe if letter.lower() in 'ščćđž') / self.nr_of_chars
     
     def perc_tokens_longer_10(self):
-        return 1.0 * sum(1 for token, _ in self.tagged_tokens if len(token) >= 10) / self.nr_of_tokens
+        return sum(1 for token, _ in self.tagged_tokens if len(token) >= 10) / self.nr_of_tokens
     
     def perc_tokens_longer_8(self):
-        return 1.0 * sum(1 for token, _ in self.tagged_tokens if len(token) >= 8) / self.nr_of_tokens
+        return sum(1 for token, _ in self.tagged_tokens if len(token) >= 8) / self.nr_of_tokens
     
     def perc_tokens_longer_6(self):
-        return 1.0 * sum(1 for token, _ in self.tagged_tokens if len(token) >= 6) / self.nr_of_tokens
+        return sum(1 for token, _ in self.tagged_tokens if len(token) >= 6) / self.nr_of_tokens
     
     def perc_tokens_shorter_5(self):
-        return 1.0 * sum(1 for token, _ in self.tagged_tokens if len(token) <= 5) / self.nr_of_tokens
+        return sum(1 for token, _ in self.tagged_tokens if len(token) <= 5) / self.nr_of_tokens
     
     def perc_tokens_shorter_4(self):
-        return 1.0 * sum(1 for token, _ in self.tagged_tokens if len(token) <= 4) / self.nr_of_tokens
+        return sum(1 for token, _ in self.tagged_tokens if len(token) <= 4) / self.nr_of_tokens
     
     def perc_tokens_shorter_3(self):
-        return 1.0 * sum(1 for token, _ in self.tagged_tokens if len(token) <= 3) / self.nr_of_tokens
+        return sum(1 for token, _ in self.tagged_tokens if len(token) <= 3) / self.nr_of_tokens
     
     def is_compound(self):
         return any([True for token, _ in self.tagged_tokens if '-' in token])

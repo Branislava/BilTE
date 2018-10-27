@@ -40,12 +40,13 @@ if __name__ == '__main__':
             for index, row in df.iterrows():
 
                 label = row['class']
-                MWEs = [SerbianMWE('GIZA_SR_ORIGINAL', row['GIZA_SR_ORIGINAL']),
-                        SerbianMWE('GIZA_SR_LMTZ', row['GIZA_SR_LMTZ']),
-                        SerbianMWE('EXTRACTED_SR', row['EXTRACTED_SR']),
-                        EnglishMWE('DICTIONARY_EN', row['DICTIONARY_EN'])]
+                source = row['source']
+                MWEs = [SerbianMWE('T(align.chunk)', row['T(align.chunk)']),
+                        SerbianMWE('T(align.chunk.lemm)', row['T(align.chunk.lemm)']),
+                        SerbianMWE('T(term)', row['T(term)']),
+                        EnglishMWE('S(term)', row['S(term)'])]
                 
-                features_dict = {'class': label}
+                features_dict = {'class': label, 'source': source}
                 
                 o = JointFeatures(MWEs)
                 features = o.extract()
@@ -80,16 +81,16 @@ if __name__ == '__main__':
                 ('Naive Bayes', naive_bayes.MultinomialNB()),
                 ('Logistic Regression', linear_model.LogisticRegression()),
                 ('Linear SVM', svm.LinearSVC()),
-                ('Random Forest', ensemble.RandomForestClassifier()),
-                ('Gradient Boosting', ensemble.GradientBoostingClassifier(n_estimators=80,learning_rate=0.1, min_samples_split=400,min_samples_leaf=50,max_depth=7,max_features='sqrt',subsample=0.8,random_state=10)),
-                ('Extreme Gradient Boosting', xgboost.XGBClassifier()),
                 ('RBF SVM', svm.SVC()),
+                ('Random Forest', ensemble.RandomForestClassifier()),
+                ('Gradient Boosting', ensemble.GradientBoostingClassifier()),
+                ('Extreme Gradient Boosting', xgboost.XGBClassifier()),
             ]
             
             # output out_filename
             fout = open('results.txt', 'w')
             
-            fout.write('Classifier&Acc&F1&P&R\\\\\\hline\n')
+            fout.write('\\textbf{Classifier}&\\textbf{ACC}&\\textbf{F\\textsubscript{1}}&\\textbf{P}&\\textbf{R}\\\\\\cline{1-5}\n')
             for clf_name, clf in classifiers:
                 
                 if clf_name == 'Gradient Boosting':
@@ -104,12 +105,12 @@ if __name__ == '__main__':
                     plt.savefig('feature_importance.png')
                     
                 accuracy_scores, f1_scores, p_scores, r_scores = train_model(clf, X, y, cv=5)    
-                fout.write('%s & %0.2f $\pm$ %0.2f & %0.2f $\pm$ %0.2f & %0.2f $\pm$ %0.2f & %0.2f $\pm$ %0.2f \\\\\\hline\n' % 
+                fout.write('\\\\textbf{%s} & %0.2f $\pm$ %0.2f & %0.2f $\pm$ %0.2f & %0.2f $\pm$ %0.2f & %0.2f $\pm$ %0.2f \\\\\\cline{1-5}\n' % 
                            (clf_name, 
-                            100 * accuracy_scores.mean(), 100 * accuracy_scores.std() * 2,
-                            100 * f1_scores.mean(), 100 * f1_scores.std() * 2,
-                            100 * p_scores.mean(), 100 * p_scores.std() * 2,
-                            100 * r_scores.mean(), 100 * r_scores.std() * 2))
+                            100 * accuracy_scores.mean(), 100 * accuracy_scores.std(),
+                            100 * f1_scores.mean(), 100 * f1_scores.std(),
+                            100 * p_scores.mean(), 100 * p_scores.std(),
+                            100 * r_scores.mean(), 100 * r_scores.std()))
                 fout.flush()
 
             fout.close()

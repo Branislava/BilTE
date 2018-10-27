@@ -14,8 +14,8 @@ class SingleFeatures(Features):
         self.MWE = MWE
         
         self.feature_map = {
-            'number_of_characters': self.MWE.number_of_characters,
-            'number_of_different_characters': self.MWE.number_of_different_characters,
+            'number_of_characters': self.MWE.number_of_chars,
+            'number_of_different_characters': self.MWE.number_of_different_chars,
             'number_of_tokens': self.MWE.number_of_tokens,
             'avg_token_length': self.MWE.avg_token_length,
             'perc_of_nouns': self.MWE.perc_of_nouns,
