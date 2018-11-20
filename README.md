@@ -1,1 +1,1 @@
-# domain_MWT_validation
+Two Approaches to Compilation of Bilingual Multi-Word Terminology Lists from Lexical Resources
